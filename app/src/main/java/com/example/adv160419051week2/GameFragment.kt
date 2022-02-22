@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlin.random.Random
 
 
 class GameFragment : Fragment() {
@@ -20,14 +22,45 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var playerName = ""
         if (arguments != null) {
-            val playerName = GameFragmentArgs.fromBundle(requireArguments()).playerName
-            txtTurn.text = "$playerName's Turn"
+            playerName = GameFragmentArgs.fromBundle(requireArguments()).playerName
+
+            if (playerName == "") {
+                playerName = "Anonymous"
+            }
         }
 
-//        btnSubmit.setOnClickListener {
-//            val action = GameFragmentDirections.actionMainFragment()
-//            Navigation.findNavController(it).navigate(action)
-//        }
+        txtTurn.text = "$playerName's Turn"
+
+        var num1 = (0..11).random()
+        var num2 = (0..11).random()
+        var score = 0
+
+        txtNumber1.text = num1.toString()
+        txtNumber2.text = num2.toString()
+
+        btnSubmit.setOnClickListener {
+            var keyAnswer = (num1 + num2).toString()
+            var userAnswer = txtAnswer.text.toString()
+
+            if (userAnswer == keyAnswer) {
+                score += 1
+
+                num1 = (0..11).random()
+                num2 = (0..11).random()
+
+                txtNumber1.text = num1.toString()
+                txtNumber2.text = num2.toString()
+
+                txtAnswer.setText("")
+
+            } else {
+                val action = GameFragmentDirections.actionResultFragment(score)
+                Navigation.findNavController(it).navigate(action)
+            }
+
+        }
     }
 }
