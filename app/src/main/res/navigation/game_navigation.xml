@@ -21,13 +21,24 @@
         android:name="com.example.adv160419051week2.GameFragment"
         android:label="Game Screen"
         tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="player_name"
+            app:argType="string" />
+        <action
+            android:id="@+id/actionResultFragment"
+            app:destination="@id/resultFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.adv160419051week2.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
         <action
             android:id="@+id/actionMainFragment"
             app:destination="@id/mainFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
-        <argument
-            android:name="player_name"
-            app:argType="string" />
     </fragment>
 </navigation>
